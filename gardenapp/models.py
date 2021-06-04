@@ -25,6 +25,14 @@ class Plant(models.Model):
     planturl=models.URLField()
     description=models.TextField()
 
+    def discountAmount(self):
+        self.discount= self.price * .20
+        return self.discount
+
+    def discountPrice(self):
+        disc = self.discountAmount()
+        self.discountedPrice = self.price-self.discount 
+
     def __str__(self):
         return self.plantname
 
