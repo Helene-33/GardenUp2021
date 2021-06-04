@@ -1,6 +1,9 @@
+from gardenapp.forms import PlantForm
 from django.test import TestCase
 from django.contrib.auth.models import User 
 from .models import PlantType, Plant, Tips
+import datetime
+from .forms import PlantForm
 
 # Create your tests here.
 class PlantTypeTest(TestCase):
@@ -28,3 +31,29 @@ class PlantTest(TestCase):
 
     def test_discountAmount(self):
         self.assertEqual(self.plant.discountPrice(), 39.92)
+
+class NewPlantForm(TestCase):
+    def test_plantform(self):
+        data={
+            'plantname':'Daisy', 
+            'planttype': 'Outdoor shady', 
+            'user':'helene', 
+            'dateentered':'03/06/2021', 
+            'price':'5.99',
+            'planturl': 'https://www.thespruce.com/daisy-types-for-gardens-1316051',
+            'description': 'Gorgeous daisies blumming for months!'
+            }
+        form=PlantForm (data)
+        self.assertTrue(form.is_valid)
+
+    def test_plantform_Invalide(self):
+        data={
+            'plantname':'Daisy', 
+            'planttype': 'Outdoor shady', 
+            'user':'helene', 
+            'dateentered':'03/06/2021', 
+            'planturl': 'https://www.thespruce.com/daisy-types-for-gardens-1316051',
+            'description': 'Gorgeous daisies blumming for months!'
+            }
+        form=PlantForm (data)
+        self.assertFalse(form.is_valid)
