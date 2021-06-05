@@ -1,9 +1,11 @@
+from gardenapp.views import newPlant
 from gardenapp.forms import PlantForm
 from django.test import TestCase
 from django.contrib.auth.models import User 
 from .models import PlantType, Plant, Tips
 import datetime
 from .forms import PlantForm
+from django.urls import reverse_lazy, reverse
 
 # Create your tests here.
 class PlantTypeTest(TestCase):
@@ -57,3 +59,13 @@ class NewPlantForm(TestCase):
             }
         form=PlantForm (data)
         self.assertFalse(form.is_valid)
+
+class New_Plant_Authentication_Test(TestCase):
+    def setUp(self):
+        self.test_user=User.objects.create(username='testuser1', password='Cesaire23')
+        self.type=Type.objects.create(typename='Indoor sunny')
+        self.plant=Plant.objects.create(plantname= 'Digitalis (Foxglove)', planttype=self.type, user=self.user, dateentered='03/06/2021', price= 49.99, planturl= 'https://www.gardeningknowhow.com/ornamental/flowers/foxglove/' , description="Digitalis" )
+
+    def test_redirect_if_not_logged_in(self):
+        response.self.client.get(reverse('newPlant'))
+        self.assertRedirects(response, 'accounts/login/?next=/gardenapp/newplant/')
