@@ -6,4 +6,6 @@ urlpatterns = [
     path('plants/', views.plants, name='plants'),
     path('plantDetail/<int:id>', views.plantDetail, name='detail'),
     path('newplant/', views.newPlant, name='newplant'),
+    path('loginmessage/', views.loginmessage, name='loginmessage'),
+    path('logoutmessage/', views.logoutmessage, name='logoutmessage'),
 ]
